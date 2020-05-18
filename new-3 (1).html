@@ -1,0 +1,63 @@
+<style> canvas { width:100%; height :100%; } </style>
+
+<body>
+    <audio id="song" src="emino.mp3"></audio>
+    <script src="js/three.min.js"></script>
+    <script type="text/javascript">
+        
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera (75,window.innerWidth / window.innerHeight , 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        
+        var rotation=true;
+         
+        
+        var ambient = new THREE.AmbientLight (0xffffff);
+        
+        
+        var cubes = new THREE.Object3D();
+        
+        
+        scene.add(camera); 
+        scene.add(cubes);
+        scene.add(ambient);
+        
+        camera.position.z=5;
+        
+        renderer.setSize(window.innerWidth,window.innerHeight);
+        
+        
+        for(var i=0;i<10;i++){
+            var gerometry = new THREE.BoxGeometry(1,1,1);
+            var material = new THREE.MeshPhongMaterial({
+            color:0xaa5cfa*Math.random()
+            });
+            var cube = new THREE.Mesh(gerometry,material);
+            
+            cube.position.x=Math.random();
+            cube.position.y=Math.random();
+            cube.position.z=Math.random();
+            
+            cubes.add(cube);
+        }
+        
+        
+        document.body.appendChild(renderer.domElement);
+        
+        
+        
+        function render() {
+	        requestAnimationFrame(render);
+           
+            if(rotation==true){
+                song.play();
+                cubes.rotation.x+=0.01;
+                cubes.rotation.y+=0.01;
+            }else{song.pause();}
+            
+	        renderer.render(scene, camera);
+        }
+        
+        render();    
+    </script>
+</body>
